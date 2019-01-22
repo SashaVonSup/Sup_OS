@@ -54,19 +54,18 @@ WRITE_SYM_AL_ATR_BL:    ; Pisat simbol AL s atributom BL
     ret
 
 WRITE_STR_DI_ATR_BL:    ; Pisat stroku [DI] s atributom BL
-    push cx
+    push di
     push ax
-    xor  cx, cx
     .LOOP:
-        cmp  [di+cx], 0
+        cmp  byte[di], 0
         je  .EXIT
-        mov  al, [di+cx]
+        mov  al, [di]
         call WRITE_SYM_AL_ATR_BL
-        inc  cx
+        inc  di
         jmp .LOOP
     .EXIT:
         pop  ax
-        pop  cx
+        pop  di
         ret
 
 VID_PAG: db 0; nomer videostranicy
