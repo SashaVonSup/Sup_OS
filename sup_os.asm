@@ -11,26 +11,33 @@ BOOT:
     mov sp, 7C00h
     sti
     
-    call INIT_SCREEN
-    mov  al, 00h
-    call CHOOSE_VID_PAGE_AL
+	; Initiali3atia ekrana
+    mov  ah, 00h
+    mov  al, 03h; text  80x25  16/8color
+    int  10h
+    mov  ah, 05h
+    mov  al, 00h; video-stranitsa #0
+    int  10h
     
-    mov  dh, 00h
-    mov  dl, 00h
-    call SET_CURSOR_DH_DL
-    mov  di, .STR0
-    mov  bl, [.ATR0]
-    call WRITE_STR_DI_ATR_BL
-    inc  dh
-    call SET_CURSOR_DH_DL
-    mov  di, .STR1
-    call WRITE_STR_DI_ATR_BL
-    inc  dl
-    call SET_CURSOR_DH_DL
+	; Cursor v 1 positiu
+    mov bx, 0
+    mov dl, 0
+    mov dh, 0
+    mov ah, 02h
+    int 10h  
+	
+	mov dh,0      ; head
+    mov ch,0      ; track
+    mov cl,2      ; 2 sector
+    mov ax, 0000h
+    mov es, ax    ; adres kuda 3arpyJaem
+    mov bx, 8000h
+    mov al, 30	  ; kol-vo sectorov
+    mov ah, 2h
+    int 13h
     
     .ATR0: db 00001111b; belym po 4ernomu
     .STR0: db "Welcome to Sup_OS!"
-    .STR1: db "Press ENTER to load the system... "
     times 510-($-07C00h) db 144
     jmp far 0000:8000h
 db 055h, 0AAh; Metka 3arpy3o4Horo cektopa
@@ -43,16 +50,16 @@ MAIN:
     call PAGE_DOWN_AL_STR_ATR_BH
 
 ;=================================================VSPOMOGATELNYE FUNCTII=======================================================
-INIT_SCREEN:    ; Initializatia ekrana
-    push ax
-    mov  ah, 00h
-    mov  al, 03h; text  80x25  16/8color
-    int  10h
-    mov  ah, 05h
-    mov  al, 00h; video-stranitsa #0
-    int  10h
-    pop  ax
-    ret
+;INIT_SCREEN:    ; Initializatia ekrana
+;    push ax
+;    mov  ah, 00h
+;    mov  al, 03h; text  80x25  16/8color
+;    int  10h
+;    mov  ah, 05h
+;    mov  al, 00h; video-stranitsa #0
+;    int  10h
+;    pop  ax
+;    ret
 
 CHOOSE_VID_PAGE_AL:     ; Vybor videostranicy AL
     push ax
