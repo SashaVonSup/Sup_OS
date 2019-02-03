@@ -38,9 +38,9 @@ BOOT:
     
     ;.ATR0: db 00001111b; belym po 4ernomu
     ;.STR0: db "Welcome to Sup_OS!"
-    times 510-($-07C00h) db 144
     jmp far 0000:8000h
-db 055h, 0AAh; Metka 3arpy3o4Horo cektopa
+	times 510-($-07C00h) db 144
+	db 055h, 0AAh; Metka 3arpy3o4Horo cektopa
 
 ;=====================================================OSNOVNOY KOD=============================================================
 org 8000h
@@ -76,22 +76,22 @@ MAIN:
     	call SET_CURSOR_DH_DL
     	mov  ax, [MOUSE_I1]
     	call WRITE_DEC_NUM_AX_ATR_BL
-	inc  dh
+		inc  dh
     	call SET_CURSOR_DH_DL
     	mov  ax, [MOUSE_X1]
     	call WRITE_DEC_NUM_AX_ATR_BL
-	inc  dh
-	call SET_CURSOR_DH_DL
+		inc  dh
+		call SET_CURSOR_DH_DL
     	mov  ax, [MOUSE_Y1]
     	call WRITE_DEC_NUM_AX_ATR_BL
     	inc  dh
-	call SET_CURSOR_DH_DL
+		call SET_CURSOR_DH_DL
     	mov  ax, [BUTTON_1]
     	call WRITE_DEC_NUM_AX_ATR_BL
     	jmp  .REPEAT
 
-    .TEST1:     db 'ДГДМДuДКДО ДwДu ДuДЛДv ДПДДДyДЗ Д}ДСДsД{ДyДЗ ДЖДВДpД~ДИДЕДxДГД{ДyДЗ ДqДЕД|ДАД{ ДtДp ДrДНДБДuДz ДЙДpДР', 13, 0
-    .TEST2:     db 'ДRД[ДEДYД] ДGДE ДEДZДF Д^ДSДIДV ДMД`ДCДKДIДV ДUДQД@ДNДWДTДHДRДKДIДV ДAДTДLДOДK ДDД@ ДBД\ДPДEДJ ДXД@Д_', 13, 0
+    .TEST1:     db 'съешь же ещЄ этих м€гких французских булок да выпей чаю', 13, 0
+    .TEST2:     db '—Џ≈Ў№ ∆≈ ≈ў® Ё“»’ ћя√ »’ ‘–јЌ÷”«— »’ Ѕ”Ћќ  ƒј ¬џѕ≈… „јё', 13, 0
     .TEST3:     db 'the quick brown fox jumps over the lazy dog', 13, 0
     .TEST4:     db 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG', 13, 0
     .SIGN_I:    db 'Mouse Info:     ', 13, 0
